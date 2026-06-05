@@ -792,30 +792,35 @@ font-family:'Dancing Script',cursive;color:var(--rosa-escuro);font-size:2.5rem;t
     </header>
 
     <!-- Player de Música -->
-    <section class="music-player">
-        <h2><i class="fas fa-music"></i> Pra começar, te dedico uma musiquinha 🎵</h2>
-        <div class="custom-player">
-            <label class="btn-music">
-                <i class="fas fa-upload"></i> Escolher Música
-                <input type="file" id="musicInput" accept="audio/*">
-            </label>
-        </div>
-        <p class="music-info" id="musicInfo">Escolha uma música especial 🎵</p>
-        <div class="music-controls" style="display: none;" id="musicControls">
-            <button class="control-btn" onclick="togglePlay()">
-                <i class="fas fa-play" id="playBtn"></i>
-            </button>
-            <div class="progress-container">
-                <div class="progress-bar" onclick="seekMusic(event)">
-                    <div class="progress" id="musicProgress"></div>
-                </div>
-                <div class="time-display">
-                    <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
-                </div>
+<section class="music-player">
+    <h2><i class="fas fa-music"></i> Músicas que me lembram você, Isabella ❤️</h2>
+
+    <div class="custom-player">
+        <button class="btn-music" onclick="togglePlay()">
+            <i class="fas fa-play" id="playBtn"></i>
+            <span id="playText">Tocar Playlist</span>
+        </button>
+    </div>
+
+    <p class="music-info" id="musicInfo">
+        Clique em play para começar nossa playlist ❤️
+    </p>
+
+    <div class="music-controls" id="musicControls">
+        <div class="progress-container">
+            <div class="progress-bar" onclick="seekMusic(event)">
+                <div class="progress" id="musicProgress"></div>
+            </div>
+
+            <div class="time-display">
+                <span id="currentTime">0:00</span> /
+                <span id="duration">0:00</span>
             </div>
         </div>
-        <audio id="audioPlayer"></audio>
-    </section>
+    </div>
+
+    <audio id="audioPlayer"></audio>
+</section>
 
     <!-- Contador -->
     <section class="contador-section">
@@ -1274,59 +1279,108 @@ font-family:'Dancing Script',cursive;color:var(--rosa-escuro);font-size:2.5rem;t
         }, 5000);
     }
 
-    // ============ MÚSICA ============
-    function configurarMusica() {
-        const input = document.getElementById('musicInput');
-        const player = document.getElementById('audioPlayer');
-        
-        input.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const url = URL.createObjectURL(file);
-                player.src = url;
-                document.getElementById('musicInfo').textContent = `🎵 ${file.name}`;
-                document.getElementById('musicControls').style.display = 'flex';
-                player.addEventListener('loadedmetadata', () => {
-                    document.getElementById('duration').textContent = formatTime(player.duration);
-                });
-            }
-        });
+   // ============ PLAYLIST ============
+const playlist = [
+    {
+        nome: "Música 1 ❤️",
+        arquivo: "musica1.mp3"
+    },
+    {
+        nome: "Música 2 ❤️",
+        arquivo: "musica2.mp3"
+    },
+    {
+        nome: "Música 3 ❤️",
+        arquivo: "musica3.mp3"
     }
+];
 
-    function togglePlay() {
-        const player = document.getElementById('audioPlayer');
-        const btn = document.getElementById('playBtn');
-        
-        if (isPlaying) {
-            player.pause();
-            btn.classList.remove('fa-pause');
-            btn.classList.add('fa-play');
-        } else {
-            player.play();
-            btn.classList.remove('fa-play');
-            btn.classList.add('fa-pause');
+let musicaAtual = 0;
+
+function configurarMusica() {
+    carregarMusica(musicaAtual);
+
+    audio.addEventListener('ended', () => {
+        musicaAtual++;
+
+        if (musicaAtual >= playlist.length) {
+            musicaAtual = 0;
         }
-        isPlaying = !isPlaying;
-        
-        player.ontimeupdate = () => {
-            const progress = (player.currentTime / player.duration) * 100;
-            document.getElementById('musicProgress').style.width = progress + '%';
-            document.getElementById('currentTime').textContent = formatTime(player.currentTime);
-        };
-    }
 
-    function seekMusic(e) {
-        const player = document.getElementById('audioPlayer');
-        const bar = e.currentTarget;
-        const pos = (e.offsetX / bar.offsetWidth) * player.duration;
-        player.currentTime = pos;
-    }
+        carregarMusica(musicaAtual);
 
-    function formatTime(seconds) {
-        const min = Math.floor(seconds / 60);
-        const sec = Math.floor(seconds % 60);
-        return `${min}:${sec < 10 ? '0' + sec : sec}`;
+        if (isPlaying) {
+            audio.play();
+        }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+        document.getElementById('duration').textContent =
+            formatTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+        const progress =
+            (audio.currentTime / audio.duration) * 100;
+
+        document.getElementById('musicProgress').style.width =
+            progress + '%';
+
+        document.getElementById('currentTime').textContent =
+            formatTime(audio.currentTime);
+    });
+}
+
+function carregarMusica(index) {
+    audio.src = playlist[index].arquivo;
+
+    document.getElementById('musicInfo').innerHTML =
+        `🎵 Tocando: <strong>${playlist[index].nome}</strong>`;
+}
+
+function togglePlay() {
+    const btn = document.getElementById('playBtn');
+    const text = document.getElementById('playText');
+
+    if (isPlaying) {
+        audio.pause();
+
+        btn.classList.remove('fa-pause');
+        btn.classList.add('fa-play');
+
+        text.textContent = "Tocar Playlist";
+
+        isPlaying = false;
+    } else {
+        audio.play();
+
+        btn.classList.remove('fa-play');
+        btn.classList.add('fa-pause');
+
+        text.textContent = "Pausar Playlist";
+
+        isPlaying = true;
     }
+}
+
+function seekMusic(e) {
+    const bar = e.currentTarget;
+
+    const pos =
+        (e.offsetX / bar.offsetWidth) *
+        audio.duration;
+
+    audio.currentTime = pos;
+}
+
+function formatTime(seconds) {
+    if (isNaN(seconds)) return "0:00";
+
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+
+    return `${min}:${sec < 10 ? '0' + sec : sec}`;
+}
 </script>
 </body> 
 </html>
