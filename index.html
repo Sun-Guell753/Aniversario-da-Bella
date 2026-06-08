@@ -770,6 +770,11 @@ font-family:'Dancing Script',cursive;color:var(--rosa-escuro);font-size:2.5rem;t
 .quiz-option.correct{background:#c8e6c9}
 .quiz-option.wrong{background:#ffcdd2}
 
+/* Cartinha detalhes */
+    .saudacao {
+        margin-bottom: 2rem;
+    }
+
 </style>
 </head> <body> <!-- Corações flutuando --> <div class="hearts-bg" id="heartsBg"></div>
 
@@ -872,7 +877,7 @@ font-family:'Dancing Script',cursive;color:var(--rosa-escuro);font-size:2.5rem;t
 
     <!-- Motivos -->
     <section class="reasons-section">
-        <h2><i class="fas fa-star"></i> Detalhes que amo em você</h2>
+        <h2><i class="fas fa-star"></i> Coisas que amo em você</h2>
         <div class="reasons-grid" id="reasonsGrid">
             <!-- Cards inseridos via JavaScript -->
         </div>
@@ -886,13 +891,22 @@ font-family:'Dancing Script',cursive;color:var(--rosa-escuro);font-size:2.5rem;t
             <p style="margin-top: 10px; color: #666;">Clique para ler</p>
         </div>
         <div class="letter-content" id="letterContent">
-            <p>Minha querida princesa,</p>
-            <p>Hoje a gente celebra mais um ano da sua existência, da mulher incrivelmente maravilhosa que eu tenho o orgulho de amar, e eu não poderia deixar de agradecer e de comemorar pela pessoa mais incrível que eu já conheci.</p>
-            <p>Quero te dar os meus parabéns, feliz aniversáriooooooooo mooooooooooo!</p>
-            <p>Sabe? em cada momento que nós passamos juntos, eu descubro ainda mais razões pra te amar. Sua risada que guia o meu coração, seu olhar que entrega tudo sempre kkkkkkk e sua presença me faz sentir completo.</p>
-            <p>Você é minha melhor amiga, minha paixão, meu tudo. Com você, eu aprendi o que é amar de verdade, por isso eu admiro tanto a sua personalidade, seu jeitinho único de ser que faz você ser quem você é.</p>
-            <p>Que esse ano a vida te traga muitas felicidades, muita saúde, muito amor e que o papai do céu possa cumprir os bons desejos do seu coração. Eu vou estar sempre ao seu lado, minha pequena valente!❤️</p>
-            <p class="signature">Com todo meu amor,<br>Guell ❤️</p>
+            <p class="saudacao">Minha querida princesa,</p>
+            <p>Hoje celebramos mais um ano da sua vida, da mulher incrível que eu tenho o privilégio de amar. E eu não poderia deixar de agradecer a Deus e comemorar pela pessoa mais especial que já conheci.</p>
+            <br>
+            <p>Feliz aniversáriooooo, mooooo! ❤️</p>
+            <br>
+            <p>A cada momento que passamos juntos, eu encontro ainda mais motivos para te amar. Seu sorriso ilumina os meus dias, seu olhar sempre me entrega tudo o que está sentindo (mesmo quando tenta esconder kkkkk), e a sua presença faz qualquer lugar se tornar especial.</p>
+            <br>
+            <p>Você é minha melhor amiga, minha paixão e uma das maiores bênçãos que Deus colocou na minha vida. Ao seu lado, aprendi o verdadeiro significado do amor, e é por isso que admiro tanto a mulher que você é: seu coração, sua personalidade e esse jeitinho único que torna você simplesmente inesquecível.</p>
+            <br>
+            <p>Desejo que este novo ciclo seja repleto de felicidade, saúde, conquistas e momentos inesquecíveis. Que o Papai do Céu continue guiando seus passos e realizando os bons desejos do seu coração.</p>
+            <br>
+            <p>E lembre-se: aconteça o que acontecer, eu estarei sempre ao seu lado, minha pequena valente. ❤️</p>
+            <br>
+            <p>Com todo o meu amor;</p>
+            <br>
+            <p class="saudacao"> Guell ❤️</p>
         </div>
     </section>
 
@@ -955,11 +969,11 @@ font-family:'Dancing Script',cursive;color:var(--rosa-escuro);font-size:2.5rem;t
         
         // Memórias da linha do tempo
         memorias: [
-            { data: "15/08/2022", titulo: "Primeiro Olhar", desc: "O dia em que nossos olhos se encontraram e meu coração disparou.", img: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400" },
-            { data: "20/08/2022", titulo: "Primeiro Date", desc: "Um café que virou conversa de horas. Senti que te conhecia há uma vida.", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" },
-            { data: "15/09/2022", titulo: "Namoro", desc: "O dia mais feliz da minha vida. Você aceitou ser minha namorada!", img: "https://images.unsplash.com/photo-1529619768328-e37af76c6fe5?w=400" },
-            { data: "25/12/2022", titulo: "Primeiro Natal", desc: "Presentes,Family e muito amor. Nosso primeiro natal juntos.", img: "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=400" },
-            { data: "14/02/2023", titulo: "Dia dos Namorados", desc: "Celebramos nosso amor pela primeira vez nesta data especial.", img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400" }
+            { data: "15/08/2022", titulo: "", desc: "", img: "" },
+            { data: "20/08/2022", titulo: "", desc: "", img: "" },
+            { data: "15/09/2022", titulo: "", desc: "", img: "" },
+            { data: "25/12/2022", titulo: "", desc: "", img: "" },
+            { data: "14/02/2023", titulo: "", desc: "", img: "" }
         ],
         
         // Motivos para amar
@@ -974,12 +988,12 @@ font-family:'Dancing Script',cursive;color:var(--rosa-escuro);font-size:2.5rem;t
         
         // Fotos da galeria (URLs)
         galeria: [
-            "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400",
-            "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400",
-            "https://images.unsplash.com/photo-1529619768328-e37af76c6fe5?w=400",
-            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400",
-            "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=400",
-            "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400"
+            "IMG-20260604-WA0113.jpg",
+            "IMG-20260604-WA0114.jpg",
+            "IMG-20260604-WA0116.jpg",
+            "IMG-20260604-WA0119.jpg",
+            "IMG-20260604-WA0128.jpg",
+            "1780541781439.png"
         ],
         
         // Perguntas do quiz
@@ -988,7 +1002,7 @@ font-family:'Dancing Script',cursive;color:var(--rosa-escuro);font-size:2.5rem;t
             { pergunta: "Onde foi nosso primeiro Beijo?", opcoes: ["Cinema", "Parque", "Café", "Miamor KKKKKKKK"], correta: 3 },
             { pergunta: "Qual é o seu doce favorito", opcoes: ["Torta de Limão", "Torta de amora", "Eu = Guel", "Chocolate", "Mini docinhos de festa"], correta: 2 }, 
             { pergunta: "O que eu mais amo em você?", opcoes: ["Tudo! hehehe", "O sorriso lindo", "Os zoiões", "O Buchinho"], correta: 0 }, 
-            { pergunta: "Qual foi é a mulher mais incrível que já pisou na terra?", opcoes: ["Cleópatra (69 a.C. – 30 a.C.) ", "Marie Curie (1867 – 1934)", "Isabella Ramos E. (2007 - ...)", "Joana D’Arc (1412 – 1431)"], correta: 3 }],
+            { pergunta: "Qual foi é a mulher mais incrível que já pisou na terra?", opcoes: ["Cleópatra (69 a.C. – 30 a.C.) ", "Marie Curie (1867 – 1934)", "Isabella Ramos E. (2007 - ...)", "Joana D’Arc (1412 – 1431)"], correta: 2 }],
         // Mensagens românticas aleatórias
         mensagensDoces: [
             "Você é o melhor presente que Deus me deu! 🎁",
