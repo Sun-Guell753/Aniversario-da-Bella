@@ -833,7 +833,33 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
     .saudacao {
         margin-bottom: 2rem;
     }
+/* Surpresa especial */
+    .surpresa {
+        background: linear-gradient(135deg, #fff5f5, white);
+        padding: 35px;
+        border-radius: 25px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+        text-align: center;
+        animation: fadeIn 1s ease;
+    }
 
+    .surpresa h2 {
+        font-family: 'Dancing Script', cursive;
+        color: var(--rosa-escuro);
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .surpresa p {
+        color: #555;
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .surpresa button {
+        margin-top: 20px;
+    }
 </style>
 </head> <body> <!-- Corações flutuando --> <div class="hearts-bg" id="heartsBg"></div>
 
@@ -844,7 +870,9 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
             <i class="fas fa-heart envelope-heart"></i>
         </div>
     </div>
-    <p class="tap-message">Toca aqui pra ganhar uma surpresinha hehehe! ❤️</p>
+    <p class="tap-message">Bellaaaa... preparei uma coisinha pra você ❤️
+                        Não é perfeito, mas foi feito com todo meu coração.
+                        Toca aqui...</p>
 </div>
 
 <!-- Conteúdo Principal -->
@@ -953,7 +981,7 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
     </section>
 
     <!-- Carta -->
-    <section class="letter-section">
+        <section class="letter-section">
         <h2><i class="fas fa-envelope-open-text"></i> Um bilhetinho pra você amor</h2>
         <div class="letter-envelope" onclick="toggleLetter()">
             <i class="fas fa-heart" style="font-size: 4rem; color: var(--rosa-escuro); cursor: pointer; animation: pulse 2s infinite;"></i>
@@ -1107,11 +1135,26 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
 
     // ============ TELA INICIAL ============
     function abrirCarta() {
-        document.getElementById('tela-inicial').classList.add('hidden');
-        document.getElementById('main-content').classList.add('visible');
-        // Atualiza o nome no cabeçalho
-        document.querySelector('header h1').textContent = `Feliz Aniversário, ${CONFIG.nome} ❤️`;
-    }
+
+        const tela = document.getElementById('tela-inicial');
+
+                tela.innerHTML = `
+                       <div class="surpresa">
+                        <i class="fas fa-heart"></i>
+                        <h2>Para a pessoa que mudou minha vida...</h2>
+                        <p>Preparei isso com muito amor ❤️</p>
+                    </div>
+                `;
+
+                setTimeout(() => {
+                    tela.classList.add('hidden');
+                    document.getElementById('main-content').classList.add('visible');
+
+                    document.querySelector('header h1').textContent =
+                    `Feliz Aniversário, ${CONFIG.nome} ❤️`;
+
+                },3000);
+            }
 
     // ============ CORAÇÕES FLUTUANTES ============
     function criarCoracoes() {
