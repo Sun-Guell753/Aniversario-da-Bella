@@ -182,6 +182,8 @@
             padding: 20px;
             display: none;
             animation: fadeIn 1s ease;
+            position: relative;
+            z-index: 1;
         }
 
         #main-content.visible {
@@ -468,6 +470,15 @@
             height:420px;
             object-fit:contain;
             background:#000;
+            cursor: pointer;
+        }
+
+        .carousel-slide img {
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide img:hover {
+            transform: scale(1.02);
         }
 
         .carousel-caption {
@@ -831,8 +842,19 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
 .reasons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
 .reason-card{background:linear-gradient(135deg,var(--rosa-claro),white);padding:20px;border-radius:18px;text-align:center}
 .reason-card i{font-size:2rem;color:var(--rosa-escuro);margin-bottom:10px}
-.letter-content{max-height:0;overflow:hidden;opacity:0;transition:.6s;padding:0 10px}
-.letter-content.show{max-height:1200px;opacity:1;padding-top:20px}
+.letter-content {
+                    max-height: 0;
+                    overflow: hidden;
+                    opacity: 0;
+                    transition: max-height 0.8s ease, opacity 0.6s ease;
+                    padding: 0 10px;
+                }
+
+                .letter-content.show {
+                    max-height: 3000px;
+                    opacity: 1;
+                    padding-top: 20px;
+                }
 .quiz-option{background:#fff;padding:15px;margin:10px 0;border-radius:15px;cursor:pointer;transition:.3s}
 .quiz-option:hover{transform:translateY(-3px)}
 .quiz-option.correct{background:#c8e6c9}
@@ -1210,7 +1232,7 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
 
     const CONFIG = {
         // Nome da sua namorada
-        nome: "Meu Amor",
+        nome: "Bellaaaaaa",
         
         // Data de início do namoro (formato: "YYYY-MM-DD")
         dataNamoro: new Date(2023,8,4),
@@ -1389,7 +1411,11 @@ function abrirCarta() {
             const slide = document.createElement('div');
             slide.className = 'carousel-slide';
             slide.innerHTML = `
-                <img src="${foto.url}" alt="${foto.titulo}">
+                <img 
+                    src="${foto.url}" 
+                    alt="${foto.titulo}"
+                    onclick="openModal('${foto.url}')"
+                >
                 <div class="carousel-caption">
                     <h3>${foto.titulo}</h3>
                     <p>${foto.desc}</p>
