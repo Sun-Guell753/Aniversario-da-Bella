@@ -243,13 +243,22 @@
             overflow:hidden;
         }
 
-        .music-player::before{
-            content:"❤️";
-            position:absolute;
-            font-size:120px;
-            opacity:.05;
-            right:20px;
-            top:10px;
+        .music-player::before {
+            content: "❤️";
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.05;
+            right: 20px;
+            top: 10px;
+            z-index: 1;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            user-select: none;
+        }
+
+        .music-player:hover::before {
+            opacity: 0.12;
+            transform: scale(1.08);
         }
 
         .music-info strong{
@@ -860,7 +869,134 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
     .surpresa button {
         margin-top: 20px;
     }
+
+    /* ===== CORAÇÃO SECRETO DO VÍDEO ===== */
+
+    .secret-video-button {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+
+        width: 120px;
+        height: 120px;
+
+        background: transparent;
+        border: none;
+
+        font-size: 120px;
+        line-height: 1;
+
+        opacity: 0.05;
+        cursor: pointer;
+
+        z-index: 5;
+
+        transition: all 0.4s ease;
+
+        padding: 0;
+    }
+
+    .secret-video-button:hover {
+        opacity: 0.15;
+        transform: scale(1.08);
+    }
+
+    .secret-video-button:active {
+        transform: scale(0.95);
+    }
+
+
+    /* ===== MODAL DO VÍDEO SECRETO ===== */
+
+    .video-modal {
+        display: none;
+
+        position: fixed;
+        inset: 0;
+
+        background: rgba(0, 0, 0, 0.92);
+
+        z-index: 20000;
+
+        justify-content: center;
+        align-items: center;
+
+        padding: 20px;
+    }
+
+    .video-modal.show {
+        display: flex;
+    }
+
+    .video-modal-content {
+        position: relative;
+
+        width: min(900px, 95vw);
+
+        animation: fadeIn 0.5s ease;
+    }
+
+    .video-modal video {
+        width: 100%;
+        max-height: 80vh;
+
+        border-radius: 20px;
+
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .video-modal-close {
+        position: absolute;
+
+        top: -50px;
+        right: 0;
+
+        color: white;
+
+        font-size: 2.5rem;
+
+        cursor: pointer;
+
+        transition: transform 0.3s;
+    }
+
+    .video-modal-close:hover {
+        transform: scale(1.2);
+    }
+
+@media (max-width: 600px) {
+
+    .secret-video-button {
+        width: 80px;
+        height: 80px;
+        font-size: 80px;
+        right: 10px;
+        top: 10px;
+        opacity: 0.07;
+    }
+
+    .video-modal {
+        padding: 15px;
+    }
+
+    .video-modal-content {
+        width: 100%;
+    }
+
+    .video-modal video {
+        max-height: 70vh;
+        border-radius: 15px;
+    }
+
+    .video-modal-close {
+        top: -45px;
+        right: 5px;
+        font-size: 2.2rem;
+    }
+}
+
 </style>
+
 </head> <body> <!-- Corações flutuando --> <div class="hearts-bg" id="heartsBg"></div>
 
 <!-- Tela Inicial -->
@@ -885,6 +1021,11 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
 
     <!-- Player de Música -->
 <section class="music-player">
+
+    <button class="secret-video-button" onclick="abrirVideoSecreto()" aria-label="Uma surpresa">
+        ❤️
+    </button>
+
     <h2><i class="fas fa-music"></i> Dedico essas pra você amor ❤️</h2>
 
     <div class="custom-player">
@@ -926,7 +1067,7 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
 
     <!-- Contador -->
     <section class="contador-section">
-        <h2><i class="far fa-clock"></i> Um bom tempo grudadinhos kkkkkk</h2>
+        <h2><i class="far fa-clock"></i> Um bom tempo grudadinhos</h2>
         <div class="contador">
             <div class="contador-item">
                 <div class="number" id="dias">0</div>
@@ -1045,6 +1186,24 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
     <img class="modal-content" id="modalImg">
 </div>
 
+<!-- Modal do vídeo secreto -->
+<div class="video-modal" id="videoModal" onclick="fecharVideoSecreto(event)">
+
+    <div class="video-modal-content">
+
+        <span class="video-modal-close" onclick="fecharVideoSecreto(event)">
+            &times;
+        </span>
+
+        <video id="videoSecreto" controls>
+            <source src="video-secreto.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo.
+        </video>
+
+    </div>
+
+</div>
+
 <script>
     // ============ CONFIGURAÇÕES ============
     // Configure aqui os seus dados personalizados!
@@ -1095,11 +1254,16 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
         
         // Perguntas do quiz
         quiz: [
-            { pergunta: "Melhor dia das nossas vidas?", opcoes: ["11 de Outubro", "7 de Setembro", "04 de Setembro", "11 de Novembro"], correta: 2 },
-            { pergunta: "Onde foi nosso primeiro Beijo?", opcoes: ["Cinema", "Parque", "Café", "Miamor KKKKKKKK"], correta: 3 },
-            { pergunta: "Qual é o seu doce favorito", opcoes: ["Torta de Limão", "Torta de amora", "Eu = Guel", "Chocolate", "Mini docinhos de festa"], correta: 2 }, 
-            { pergunta: "O que eu mais amo em você?", opcoes: ["Tudo! hehehe", "O sorriso lindo", "Os zoiões", "O Buchinho"], correta: 0 }, 
-            { pergunta: "Qual é a mulher mais incrível que já pisou na terra?", opcoes: ["Cleópatra (69 a.C. – 30 a.C.) ", "Marie Curie (1867 – 1934)", "Isabella Ramos E. (2007 - ...)", "Joana D’Arc (1412 – 1431)"], correta: 2 }],
+                { pergunta: "Melhor dia das nossas vidas?", opcoes: ["11 de Outubro", "7 de Setembro", "04 de Setembro", "11 de Novembro"], correta: 2 },
+                { pergunta: "Onde foi nosso primeiro Beijo?", opcoes: ["Cinema", "Parque", "Café", "Miamor KKKKKKKK"], correta: 3 },
+                { pergunta: "Qual é o seu doce favorito?", opcoes: ["Torta de Limão", "Torta de amora", "Eu = Guel", "Chocolate", "Mini docinhos de festa"], correta: 2 }, 
+                { pergunta: "O que eu mais amo em você?", opcoes: ["Tudo! hehehe", "O sorriso lindo", "Os zoiões", "O Buchinho"], correta: 0 }, 
+                { pergunta: "Qual é a mulher mais incrível que já pisou na terra?", opcoes: ["Cleópatra (69 a.C. – 30 a.C.) ", "Marie Curie (1867 – 1934)", "Isabella Ramos E. (2007 - ...)", "Joana D’Arc (1412 – 1431)"], correta: 2 },
+                { pergunta: "Escolha um animalzinho kkkkk", opcoes: ["Gatinho", "Cachorrinho", "Furão", "Coelinho"], correta: 0 },        
+                { pergunta: "Qual dessas coisas provavelmente faz meu coração derreter?", opcoes: ["Seu sorriso charmoso kkkkkk", "Seu olhar inebriante", "Sua voz calma", "Você todinha hehehehe"], correta: 3 },
+                { pergunta: "Quem é o homem mais sortudo do planeta?", opcoes: ["Guell da Bella", "Guell da Bella", "Guell da Bella", "Guell da Bella"], correta: [0, 1, 2, 3] }],
+
+
         // Mensagens românticas aleatórias
         mensagensDoces: [
             "Você é o melhor presente que Deus me deu! 🎁",
@@ -1134,27 +1298,49 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
     });
 
     // ============ TELA INICIAL ============
-    function abrirCarta() {
+    
+function abrirCarta() {
 
-        const tela = document.getElementById('tela-inicial');
+    const tela = document.getElementById('tela-inicial');
 
-                tela.innerHTML = `
-                       <div class="surpresa">
-                        <i class="fas fa-heart"></i>
-                        <h2>Para a pessoa que mudou minha vida...</h2>
-                        <p>Preparei isso com muito amor ❤️</p>
-                    </div>
-                `;
+    tela.innerHTML = `
+        <div class="surpresa">
+            <i class="fas fa-heart"></i>
+            <h2>Para a pessoa que mudou minha vida...</h2>
+            <p>Preparei isso com muito amor ❤️</p>
+        </div>
+    `;
 
-                setTimeout(() => {
-                    tela.classList.add('hidden');
-                    document.getElementById('main-content').classList.add('visible');
+    // Começa a música imediatamente após o clique na carta
+    audio.play()
+        .then(() => {
 
-                    document.querySelector('header h1').textContent =
-                    `Feliz Aniversário, ${CONFIG.nome} ❤️`;
+            isPlaying = true;
 
-                },3000);
-            }
+            document.getElementById('playBtn').classList.remove('fa-play');
+            document.getElementById('playBtn').classList.add('fa-pause');
+
+            document.getElementById('playText').textContent =
+                "Pausar Playlist";
+
+        })
+        .catch(error => {
+
+            console.log("Não foi possível iniciar a música automaticamente:", error);
+
+        });
+
+    setTimeout(() => {
+
+        tela.classList.add('hidden');
+
+        document.getElementById('main-content').classList.add('visible');
+
+        document.querySelector('header h1').textContent =
+            `Feliz Aniversário, ${CONFIG.nome} ❤️`;
+
+    }, 3000);
+}
 
     // ============ CORAÇÕES FLUTUANTES ============
     function criarCoracoes() {
@@ -1310,28 +1496,52 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
     }
 
     function verificarResposta(index) {
-        const quiz = CONFIG.quiz[currentQuestion];
-        const resultDiv = document.getElementById('quizResult');
-        const options = document.querySelectorAll('.quiz-option');
-        
-        options.forEach(opt => opt.style.pointerEvents = 'none');
-        
-        if (index === quiz.correta) {
-            options[index].classList.add('correct');
-            resultDiv.textContent = '❤️ Correto! Eu te amo demais! ❤️';
-            resultDiv.className = 'quiz-result correct';
-            score++;
+    const quiz = CONFIG.quiz[currentQuestion];
+    const resultDiv = document.getElementById('quizResult');
+    const options = document.querySelectorAll('.quiz-option');
+
+    options.forEach(opt => opt.style.pointerEvents = 'none');
+
+    // Aceita tanto uma resposta única quanto várias respostas corretas
+    const respostasCorretas = Array.isArray(quiz.correta)
+        ? quiz.correta
+        : [quiz.correta];
+
+    if (respostasCorretas.includes(index)) {
+
+        options[index].classList.add('correct');
+
+        resultDiv.textContent = '❤️ Correto! Eu te amo demais! ❤️';
+        resultDiv.className = 'quiz-result correct';
+
+        score++;
+
+        // Se todas as opções forem corretas,
+        // marca todas como corretas
+        if (respostasCorretas.length === quiz.opcoes.length) {
+            options.forEach(opt => opt.classList.add('correct'));
+        }
+
         } else {
+
             options[index].classList.add('wrong');
-            options[quiz.correta].classList.add('correct');
+
+            // Marca as respostas corretas
+            respostasCorretas.forEach(resposta => {
+                if (options[resposta]) {
+                    options[resposta].classList.add('correct');
+                }
+            });
+
             resultDiv.textContent = '😢 Errado... Mas ainda assim te amo! ❤️';
             resultDiv.className = 'quiz-result wrong';
         }
-        
+
         resultDiv.style.display = 'block';
-        
+
         setTimeout(() => {
             currentQuestion++;
+
             if (currentQuestion < CONFIG.quiz.length) {
                 mostrarPergunta();
             } else {
@@ -1343,11 +1553,11 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
     function mostrarResultadoFinal() {
     let mensagemFinal = "";
 
-    if (score <= 2) {
+    if (score <= 3) {
         mensagemFinal = "❤️ O que importa é que eu te amo kkkkkkk ❤️";
-    } else if (score <= 4) {
+    } else if (score <= 6) {
         mensagemFinal = "🥰 Uauuuuuu, quase acertou tudinho! Vamos casar kkkkkkk ❤️";
-    } else if (score === 5) {
+    } else if (score === 8) {
         mensagemFinal = "💖 Você é mesmo o amor da minha vida! LINIDAAA! 💖";
     }
 
@@ -1451,6 +1661,7 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
     }
 
    // ============ PLAYLIST ============
+
 const playlist = [
     {
         nome: "O amor do mundo inteiro - Chapéu de Palha",
@@ -1469,9 +1680,12 @@ const playlist = [
 let musicaAtual = 0;
 
 function configurarMusica() {
+
     carregarMusica(musicaAtual);
 
-    audio.addEventListener('ended', proximaMusica);
+    audio.addEventListener('ended', () => {
+        proximaMusica();
+    });
 
     audio.addEventListener('loadedmetadata', () => {
         document.getElementById('duration').textContent =
@@ -1479,6 +1693,9 @@ function configurarMusica() {
     });
 
     audio.addEventListener('timeupdate', () => {
+
+        if (!audio.duration) return;
+
         const progress =
             (audio.currentTime / audio.duration) * 100;
 
@@ -1490,56 +1707,29 @@ function configurarMusica() {
     });
 }
 
+
+// CARREGAR MÚSICA
+
 function carregarMusica(index) {
 
     audio.src = playlist[index].arquivo;
+    audio.preload = "auto";
 
     audio.load();
 
     document.getElementById('musicProgress').style.width = "0%";
-
     document.getElementById('currentTime').textContent = "0:00";
-
     document.getElementById('duration').textContent = "0:00";
 
     document.getElementById('musicInfo').innerHTML =
         `🎵 Tocando: <strong>${playlist[index].nome}</strong>`;
 }
 
-function proximaMusica() {
-        musicaAtual++;
 
-        if (musicaAtual >= playlist.length) {
-            musicaAtual = 0;
-        }
-
-        carregarMusica(musicaAtual);
-
-        if (isPlaying) {
-            audio.play()
-        .then(()=>{
-        })
-        .catch(()=>{
-        alert("Não foi possível reproduzir essa música");
-        });
-        }
-    }
-
-function musicaAnterior() {
-    musicaAtual--;
-
-    if (musicaAtual < 0) {
-        musicaAtual = playlist.length - 1;
-    }
-
-    carregarMusica(musicaAtual);
-
-    if (isPlaying) {
-        audio.play();
-    }
-}
+// TOCAR / PAUSAR
 
 function togglePlay() {
+
     const btn = document.getElementById('playBtn');
     const text = document.getElementById('playText');
 
@@ -1557,34 +1747,112 @@ function togglePlay() {
     } else {
 
         audio.play()
-        .then(() => {
+            .then(() => {
 
-            btn.classList.remove('fa-play');
-            btn.classList.add('fa-pause');
+                btn.classList.remove('fa-play');
+                btn.classList.add('fa-pause');
 
-            text.textContent = "Pausar Playlist";
+                text.textContent = "Pausar Playlist";
 
-            isPlaying = true;
+                isPlaying = true;
 
-        })
-        .catch(error => {
-            console.log("Erro ao tocar música:", error);
-        });
+            })
+            .catch(error => {
 
+                console.log("Erro ao tocar música:", error);
+
+                alert("Clique novamente no botão para iniciar a música ❤️");
+
+            });
     }
 }
 
+
+// PRÓXIMA MÚSICA
+
+function proximaMusica() {
+
+    musicaAtual++;
+
+    if (musicaAtual >= playlist.length) {
+        musicaAtual = 0;
+    }
+
+    carregarMusica(musicaAtual);
+
+    if (isPlaying) {
+
+        audio.play()
+            .then(() => {
+
+                document.getElementById('playBtn').classList.remove('fa-play');
+                document.getElementById('playBtn').classList.add('fa-pause');
+
+                document.getElementById('playText').textContent =
+                    "Pausar Playlist";
+
+            })
+            .catch(error => {
+
+                console.log("Erro ao trocar de música:", error);
+
+            });
+    }
+}
+
+
+// MÚSICA ANTERIOR
+
+function musicaAnterior() {
+
+    musicaAtual--;
+
+    if (musicaAtual < 0) {
+        musicaAtual = playlist.length - 1;
+    }
+
+    carregarMusica(musicaAtual);
+
+    if (isPlaying) {
+
+        audio.play()
+            .then(() => {
+
+                document.getElementById('playBtn').classList.remove('fa-play');
+                document.getElementById('playBtn').classList.add('fa-pause');
+
+                document.getElementById('playText').textContent =
+                    "Pausar Playlist";
+
+            })
+            .catch(error => {
+
+                console.log("Erro ao trocar de música:", error);
+
+            });
+    }
+}
+
+
+// BARRA DE PROGRESSO
+
 function seekMusic(e) {
+
+    if (!audio.duration) return;
+
     const bar = e.currentTarget;
 
     const pos =
-        (e.offsetX / bar.offsetWidth) *
-        audio.duration;
+        (e.offsetX / bar.offsetWidth) * audio.duration;
 
     audio.currentTime = pos;
 }
 
+
+// FORMATAR TEMPO
+
 function formatTime(seconds) {
+
     if (isNaN(seconds)) return "0:00";
 
     const min = Math.floor(seconds / 60);
@@ -1592,6 +1860,36 @@ function formatTime(seconds) {
 
     return `${min}:${sec < 10 ? '0' + sec : sec}`;
 }
+
+// ============ VÍDEO SECRETO ============
+
+function abrirVideoSecreto() {
+    const modal = document.getElementById('videoModal');
+    const video = document.getElementById('videoSecreto');
+
+    modal.classList.add('show');
+
+    video.currentTime = 0;
+    video.play().catch(() => {});
+}
+
+function fecharVideoSecreto(event) {
+
+    if (
+        event.target.classList.contains('video-modal') ||
+        event.target.classList.contains('video-modal-close')
+    ) {
+
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('videoSecreto');
+
+        video.pause();
+        video.currentTime = 0;
+
+        modal.classList.remove('show');
+    }
+}
+
 </script>
 </body> 
 </html>
