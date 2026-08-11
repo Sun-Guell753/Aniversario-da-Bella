@@ -613,23 +613,23 @@
         }
 
         .timeline-dot {
-            position: absolute;
-            top: 25px;
-            width: 22px;
-            height: 22px;
-            background: var(--rosa-escuro);
-            border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 3px 10px rgba(233, 30, 99, 0.4);
-        }
+                position: absolute;
+                top: 25px;
+                left: 50%;
+                transform: translateX(-50%);
 
-        .timeline-item:nth-child(odd) .timeline-dot {
-            right: -59px;
-        }
+                width: 22px;
+                height: 22px;
 
-        .timeline-item:nth-child(even) .timeline-dot {
-            left: -59px;
-        }
+                background: var(--rosa-escuro);
+                border-radius: 50%;
+
+                border: 4px solid white;
+
+                box-shadow: 0 3px 10px rgba(233, 30, 99, 0.4);
+
+                z-index: 5;
+            }
 
         .timeline-date {
             font-weight: bold;
@@ -801,28 +801,33 @@
 
     /* Responsivo */
     @media (max-width: 768px) {
-        h1 { font-size: 2.8rem; }
-        
-        .timeline::before { left: 20px; }
-        
-        .timeline-item,
-        .timeline-item:nth-child(even) {
-            padding-left: 60px;
-            padding-right: 0;
-            justify-content: flex-start;
-        }
-        
-        .timeline-dot,
-        .timeline-item:nth-child(odd) .timeline-dot,
-        .timeline-item:nth-child(even) .timeline-dot {
-            left: 11px;
-            right: auto;
-        }
-        
-        .carousel-slide img { height: 280px; }
-        
-        .gallery-grid {
-            grid-template-columns: repeat(2, 1fr);
+    h1 { 
+        font-size: 2.8rem; 
+    }
+    
+    .timeline::before { 
+        left: 20px; 
+    }
+    
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+        padding-left: 60px;
+        padding-right: 0;
+        justify-content: flex-start;
+    }
+    
+    .timeline-dot {
+        left: 20px;
+        right: auto;
+        transform: translateX(-50%);
+    }
+    
+    .carousel-slide img { 
+        height: 280px; 
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
         }
     }
 
@@ -1017,6 +1022,166 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
     }
 }
 
+    /* =========================================
+   VISUALIZADOR DE FOTOS
+========================================= */
+
+.photo-viewer-content {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    pointer-events: none;
+}
+
+.photo-viewer-content .modal-content {
+    pointer-events: auto;
+
+    max-width: 90vw;
+    max-height: 85vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 15px;
+
+    animation: fadeIn 0.3s ease;
+}
+
+/* Botões anterior/próximo */
+
+.photo-viewer-btn {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 55px;
+    height: 55px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.9);
+
+    color: var(--rosa-escuro);
+
+    font-size: 1.3rem;
+
+    cursor: pointer;
+
+    z-index: 10002;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.3s ease;
+}
+
+.photo-viewer-btn:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.photo-prev {
+    left: 25px;
+}
+
+.photo-next {
+    right: 25px;
+}
+
+/* Contador */
+
+.photo-counter {
+    position: absolute;
+
+    bottom: 25px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: rgba(0,0,0,0.55);
+
+    color: white;
+
+    padding: 7px 15px;
+
+    border-radius: 20px;
+
+    font-size: 0.9rem;
+
+    pointer-events: none;
+}
+
+/* Cursor */
+
+.timeline-photo,
+.carousel-slide img,
+.gallery-item img {
+    cursor: pointer;
+}
+
+/* Evita o fundo da página rolar enquanto a foto está aberta */
+
+body.photo-modal-open {
+    overflow: hidden;
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+
+    .photo-viewer-content .modal-content {
+        max-width: 94vw;
+        max-height: 78vh;
+
+        border-radius: 12px;
+    }
+
+    .photo-viewer-btn {
+        width: 42px;
+        height: 42px;
+
+        font-size: 1rem;
+
+        background: rgba(255,255,255,0.8);
+    }
+
+    .photo-prev {
+        left: 10px;
+    }
+
+    .photo-next {
+        right: 10px;
+    }
+
+    .photo-counter {
+        bottom: 18px;
+        font-size: 0.8rem;
+    }
+
+    .modal-close {
+        top: 10px;
+        right: 15px;
+        font-size: 2.5rem;
+        z-index: 10003;
+    }
+}
+
 </style>
 
 </head> <body> <!-- Corações flutuando --> <div class="hearts-bg" id="heartsBg"></div>
@@ -1202,10 +1367,45 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
 <!-- Mensagens doce -->
 <div class="sweet-messages" id="sweetMessages"></div>
 
-<!-- Modal para ampliar fotos -->
-<div class="modal" id="photoModal" onclick="closeModal()">
-    <span class="modal-close">&times;</span>
-    <img class="modal-content" id="modalImg">
+<!-- VISUALIZADOR DE FOTOS -->
+<div class="modal" id="photoModal">
+
+    <button 
+        class="photo-viewer-btn photo-prev"
+        onclick="mudarFotoVisualizador(-1)"
+        aria-label="Foto anterior">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="photo-viewer-content">
+
+        <button 
+            class="modal-close"
+            onclick="fecharVisualizador()"
+            aria-label="Fechar">
+            &times;
+        </button>
+
+        <img 
+            id="modalImg"
+            class="modal-content"
+            src=""
+            alt="Foto ampliada"
+        >
+
+        <div class="photo-counter" id="photoCounter">
+            1 / 1
+        </div>
+
+    </div>
+
+    <button 
+        class="photo-viewer-btn photo-next"
+        onclick="mudarFotoVisualizador(1)"
+        aria-label="Próxima foto">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
 </div>
 
 <!-- Modal do vídeo secreto -->
@@ -1243,7 +1443,7 @@ background:white;padding:35px;border-radius:25px;box-shadow:0 15px 40px rgba(0,0
             { url: "IMG-20260604-WA0127.jpg", titulo: "Você e eu, Lindos!", desc: "Cada segundo com você é incrível" },
             { url: "IMG-20260604-WA0125.jpg", titulo: "Nois fofos", desc: "Bruxinhos" },
             { url: "IMG-20260604-WA0123.jpg", titulo: "Juntos Para Sempre", desc: "Patodavida" },
-            { url: "IMG-20260501-WA0122.jpg", titulo: "A mulher mais linda desse Universo", desc: "Meu maior orgulho" }       ],
+            { url: "IMG-20260501-WA0122.jpg", titulo: "A mulher mais linda desse Universo", desc: "Meu maior orgulho" }],
         
         // Memórias da linha do tempo
         memorias: [
@@ -1412,16 +1612,18 @@ function abrirCarta() {
             const slide = document.createElement('div');
             slide.className = 'carousel-slide';
             slide.innerHTML = `
-                <img 
-                    src="${foto.url}" 
-                    alt="${foto.titulo}"
-                    onclick="openModal('${foto.url}')"
-                >
+                <img src="${foto.url}" alt="${foto.titulo}">
                 <div class="carousel-caption">
                     <h3>${foto.titulo}</h3>
                     <p>${foto.desc}</p>
                 </div>
             `;
+
+            const imagem = slide.querySelector('img');
+
+            imagem.onclick = () => {
+                abrirVisualizador(foto.url, 'carousel');
+            };
             track.appendChild(slide);
             
             const dot = document.createElement('div');
@@ -1460,23 +1662,52 @@ function abrirCarta() {
 
     // ============ LINHA DO TEMPO ============
     function iniciarTimeline() {
-        const timeline = document.getElementById('timeline');
-        
-        CONFIG.memorias.forEach((memoria, index) => {
-            const item = document.createElement('div');
-            item.className = 'timeline-item';
-            item.innerHTML = `
-                <div class="timeline-content">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">${memoria.data}</div>
-                    <img src="${memoria.img}" alt="${memoria.titulo}">
-                    <h3 style="color: var(--rosa-escuro); margin-bottom: 8px;">${memoria.titulo}</h3>
-                    <p>${memoria.desc}</p>
+    const timeline = document.getElementById('timeline');
+    CONFIG.memorias.forEach((memoria, index) => {
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
+        item.innerHTML = `
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-date">
+                    ${memoria.data}
                 </div>
-            `;
-            timeline.appendChild(item);
-        });
-    }
+                ${
+                    memoria.img
+                    ? `
+                        <img 
+                            src="${memoria.img}" 
+                            alt="${memoria.titulo || 'Nossa memória'}"
+                            class="timeline-photo"
+                        >
+                    `
+                    : ''
+                }
+                ${
+                    memoria.titulo
+                    ? `
+                        <h3 style="color: var(--rosa-escuro); margin-bottom: 8px;">
+                            ${memoria.titulo}
+                        </h3>
+                    `
+                    : ''
+                }
+                ${
+                    memoria.desc
+                    ? `<p>${memoria.desc}</p>`
+                    : ''
+                }
+            </div>
+        `;
+        const imagem = item.querySelector('.timeline-photo');
+        if (imagem) {
+            imagem.onclick = () => {
+                abrirVisualizador(memoria.img, 'timeline');
+            };
+        }
+        timeline.appendChild(item);
+    });
+}
 
     // ============ MOTIVOS PARA AMAR ============
     function iniciarMotivos() {
@@ -1582,7 +1813,7 @@ function abrirCarta() {
 
     if (score <= 3) {
         mensagemFinal = "❤️ O que importa é que eu te amo kkkkkkk ❤️";
-    } else if (score <= 6) {
+    } else if (score <= 7) {
         mensagemFinal = "🥰 Uauuuuuu, quase acertou tudinho! Vamos casar kkkkkkk ❤️";
     } else if (score === 8) {
         mensagemFinal = "💖 Você é mesmo o amor da minha vida! LINIDAAA! 💖";
@@ -1642,7 +1873,7 @@ function abrirCarta() {
         CONFIG.galeria.forEach((foto, index) => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
-            item.onclick = () => openModal(foto);
+            item.onclick = () => abrirVisualizador(foto, 'gallery');
             item.innerHTML = `
                 <img src="${foto}" alt="Foto ${index + 1}">
                 <div class="gallery-overlay">Foto ${index + 1}</div>
@@ -1651,16 +1882,164 @@ function abrirCarta() {
         });
     }
 
-    function openModal(src) {
-        const modal = document.getElementById('photoModal');
-        const modalImg = document.getElementById('modalImg');
-        modalImg.src = src;
-        modal.classList.add('show');
+    // =========================================
+    // VISUALIZADOR DE FOTOS
+    // =========================================
+
+        let grupoFotosAtual = [];
+        let indiceFotoAtual = 0;
+        let grupoAtual = '';
+
+
+        // Descobre quais fotos pertencem ao grupo
+        function obterFotosDoGrupo(grupo) {
+
+            if (grupo === 'carousel') {
+
+                return CONFIG.carouselFotos
+                    .map(foto => foto.url)
+                    .filter(url => url);
+
+            }
+
+            if (grupo === 'timeline') {
+
+                return CONFIG.memorias
+                    .map(memoria => memoria.img)
+                    .filter(url => url);
+
+            }
+
+            if (grupo === 'gallery') {
+
+                return CONFIG.galeria
+                    .filter(url => url);
+
+            }
+
+            return [];
+        }
+
+
+        // Abre o visualizador
+        function abrirVisualizador(src, grupo) {
+
+            grupoAtual = grupo;
+
+            grupoFotosAtual = obterFotosDoGrupo(grupo);
+
+            indiceFotoAtual = grupoFotosAtual.indexOf(src);
+
+            if (indiceFotoAtual < 0) {
+                indiceFotoAtual = 0;
+            }
+
+            atualizarVisualizador();
+
+            const modal = document.getElementById('photoModal');
+
+            modal.classList.add('show');
+
+            document.body.classList.add('photo-modal-open');
+        }
+
+
+        // Atualiza a foto exibida
+        function atualizarVisualizador() {
+
+            if (!grupoFotosAtual.length) return;
+
+            const imagem = document.getElementById('modalImg');
+
+            imagem.src = grupoFotosAtual[indiceFotoAtual];
+
+            document.getElementById('photoCounter').textContent =
+                `${indiceFotoAtual + 1} / ${grupoFotosAtual.length}`;
+        }
+
+
+        // Próxima / anterior
+        function mudarFotoVisualizador(direcao) {
+
+            if (!grupoFotosAtual.length) return;
+
+            indiceFotoAtual += direcao;
+
+            // Chegou no final → volta para o começo
+            if (indiceFotoAtual >= grupoFotosAtual.length) {
+                indiceFotoAtual = 0;
+            }
+
+            // Voltou antes do começo → vai para a última
+            if (indiceFotoAtual < 0) {
+                indiceFotoAtual = grupoFotosAtual.length - 1;
+            }
+
+            atualizarVisualizador();
+        }
+
+
+        // Fecha o visualizador
+        function fecharVisualizador() {
+
+            const modal = document.getElementById('photoModal');
+
+            modal.classList.remove('show');
+
+            document.body.classList.remove('photo-modal-open');
+        }
+
+
+        // =========================================
+// DESLIZAR COM O DEDO
+// =========================================
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+const photoModal = document.getElementById('photoModal');
+
+photoModal.addEventListener('touchstart', function(event) {
+
+    if (!event.touches.length) return;
+
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+
+}, { passive: true });
+
+
+photoModal.addEventListener('touchend', function(event) {
+
+    if (!event.changedTouches.length) return;
+
+    const touchEndX = event.changedTouches[0].clientX;
+    const touchEndY = event.changedTouches[0].clientY;
+
+    const diferencaX = touchEndX - touchStartX;
+    const diferencaY = touchEndY - touchStartY;
+
+    // Ignora movimentos principalmente verticais
+    if (Math.abs(diferencaX) < Math.abs(diferencaY)) {
+        return;
     }
 
-    function closeModal() {
-        document.getElementById('photoModal').classList.remove('show');
+    // Precisa arrastar pelo menos 50px
+    if (Math.abs(diferencaX) < 50) {
+        return;
     }
+
+    // Arrastou para esquerda → próxima
+    if (diferencaX < 0) {
+        mudarFotoVisualizador(1);
+    }
+
+    // Arrastou para direita → anterior
+    else {
+        mudarFotoVisualizador(-1);
+    }
+
+    });
 
     // ============ MENSAGENS DOCES ============
     function iniciarMensagensDoces() {
