@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz Aniversário, Isaaaaaa ❤️</title>
+    <title>Feliz Aniversário, Meu Amorrrr ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -1523,7 +1523,7 @@ body.photo-modal-open {
         ❤️
     </button>
 
-    <h2><i class="fas fa-music"></i> Dedico essas pra você ❤️</h2>
+    <h2><i class="fas fa-music"></i> Dedico essas pra você amor ❤️</h2>
 
     <div class="custom-player">
 
@@ -1636,16 +1636,16 @@ body.photo-modal-open {
 
     <!-- Carta -->
         <section class="letter-section">
-        <h2><i class="fas fa-envelope-open-text"></i> Um bilhetinho pra você</h2>
+        <h2><i class="fas fa-envelope-open-text"></i> Um bilhetinho pra você amor</h2>
         <div class="letter-envelope" onclick="toggleLetter()">
             <i class="fas fa-heart" style="font-size: 4rem; color: var(--rosa-escuro); cursor: pointer; animation: pulse 2s infinite;"></i>
             <p style="margin-top: 10px; color: #666;">Clique para ler</p>
         </div>
         <div class="letter-content" id="letterContent">
-            <p class="saudacao">Minha pequena valente,</p>
+            <p class="saudacao">Minha querida princesa,</p>
             <p>Hoje celebramos mais um ano da sua vida, da mulher incrível que eu tenho o privilégio de amar. E eu não poderia deixar de agradecer a Deus e comemorar pela pessoa mais especial que já conheci.</p>
             <br>
-            <p>Feliz aniversáriooooo Bellaaaaaa! ❤️</p>
+            <p>Feliz aniversáriooooo, mooooo! ❤️</p>
             <br>
             <p>A cada momento que passamos juntos, eu encontro ainda mais motivos para te amar. Seu sorriso ilumina os meus dias, seu olhar sempre me entrega tudo o que está sentindo (mesmo quando tenta esconder kkkkk), e a sua presença faz qualquer lugar se tornar especial.</p>
             <br>
@@ -1661,7 +1661,19 @@ body.photo-modal-open {
         </div>
     </section>
 
-    
+    <!-- Quiz -->
+    <section class="quiz-section">
+        <h2><i class="fas fa-heart"></i> Quiz do Amor pra você :)</h2>
+        <div class="quiz-container" id="quizContainer">
+            <div class="quiz-question" id="quizQuestion">
+                <h3 id="questionText">Qual foi o dia que nos conhecemos?</h3>
+                <div class="quiz-options" id="quizOptions">
+                    <!-- Opções inseridas via JavaScript -->
+                </div>
+            </div>
+            <div class="quiz-result" id="quizResult"></div>
+        </div>
+    </section>
 
     <!-- Galeria -->
     <section class="gallery-section">
@@ -1673,7 +1685,7 @@ body.photo-modal-open {
 
     <!-- Rodapé -->
     <footer>
-        <p>Feito com amor especialmente para você!</p>
+        <p>Feito com amor especialmente para você Amor!</p>
         <div class="hearts">❤️❤️❤️</div>
     </footer>
 </div>
@@ -1752,7 +1764,8 @@ body.photo-modal-open {
             { url: "IMG-20260604-WA0118.jpg", titulo: "Nossa primeira foto", desc: "O dia que tudo começou kkkkk" },
             { url: "IMG-20260604-WA0127.jpg", titulo: "Você e eu, Lindos!", desc: "Cada segundo com você é incrível" },
             { url: "IMG-20260604-WA0125.jpg", titulo: "Nois fofos", desc: "Bruxinhos" },
-            
+            { url: "IMG-20260604-WA0123.jpg", titulo: "Juntos Para Sempre", desc: "Patodavida" },
+            { url: "SGCAM_20241205_105857205.jpg", titulo: "Eu te amo", desc: "Minha paixão" },
             { url: "IMG-20260727-WA0231.jpg", titulo: "Baby Shark", desc: "Kkkkkkkkkkk" },
             { url: "IMG-20260501-WA0122.jpg", titulo: "A mulher mais linda desse Universo", desc: "Meu maior orgulho" }],
         
@@ -1770,8 +1783,9 @@ body.photo-modal-open {
             { data: "09/12/2024", titulo: "", desc: "", img: "IMG-20241209-WA0064.jpg" },
             { data: "14/10/2025", titulo: "", desc: "", img: "IMG_20251014_075108.jpg" },
             { data: "14/05/2026", titulo: "", desc: "", img: "IMG-20260514-WA0045.jpg" },
+            { data: "14/05/2026", titulo: "", desc: "", img: "IMG-20260514-WA0049.jpg" },
             { data: "16/05/2026", titulo: "", desc: "", img: "IMG-20260516-WA0048.jpg" },
-            
+            { data: "12/06/2026", titulo: "", desc: "", img: "IMG-20260612-WA0097.jpg" },
             { data: "16/06/2026", titulo: "", desc: "", img: "IMG-20260617-WA0115.jpg" },
             { data: "09/07/2026", titulo: "", desc: "", img: "IMG-20260710-WA0000.jpg" },
             { data: "", titulo: "Continua no próximo verão... kkkkkkkk", desc: "", img: "praia.png" }
@@ -1803,17 +1817,26 @@ body.photo-modal-open {
             "1780541781439.png"
         ],
         
-        
+        // Perguntas do quiz
+        quiz: [
+                { pergunta: "Melhor dia das nossas vidas?", opcoes: ["11 de Outubro", "7 de Setembro", "04 de Setembro", "11 de Novembro"], correta: 2 },
+                { pergunta: "Onde foi nosso primeiro Beijo?", opcoes: ["Cinema", "Parque", "Café", "Miamor KKKKKKKK"], correta: 3 },
+                { pergunta: "Qual é o seu doce favorito?", opcoes: ["Torta de Limão", "Torta de amora", "Eu = Guel", "Chocolate", "Mini docinhos de festa"], correta: 2 }, 
+                { pergunta: "O que eu mais amo em você?", opcoes: ["Tudo! hehehe", "O sorriso lindo", "Os zoiões", "O Buchinho"], correta: 0 }, 
+                { pergunta: "Qual é a mulher mais incrível que já pisou na terra?", opcoes: ["Cleópatra (69 a.C. – 30 a.C.) ", "Marie Curie (1867 – 1934)", "Isabella Ramos E. (2007 - ...)", "Joana D’Arc (1412 – 1431)"], correta: 2 },
+                { pergunta: "Escolha um animalzinho kkkkk", opcoes: ["Gatinho", "Cachorrinho", "Furão", "Coelinho"], correta: 0 },        
+                { pergunta: "Qual dessas coisas provavelmente faz meu coração derreter?", opcoes: ["Seu sorriso charmoso kkkkkk", "Seu olhar inebriante", "Sua voz calma", "Você todinha hehehehe"], correta: 3 },
+                { pergunta: "Quem é o homem mais sortudo do planeta?", opcoes: ["Guell da Bella", "Guell da Bella", "Guell da Bella", "Guell da Bella"], correta: [0, 1, 2, 3] }],
 
 
         // Mensagens românticas aleatórias
         mensagensDoces: [
             "Você é o melhor presente que Deus me deu! 🎁",
             "Cada momento com você é Mágico! 🌟",
-            "Eu te amo muito mais a cada dia que passa! ❤️",
+            "Eu te amo muito mais a cada dia que passa mooo! ❤️",
             "Você é meu lar, a minha vida, meu tudo! 🏠",
             "Sem você, nada nessa vida faz sentido! 💗",
-            
+            "Meu coração é seu pra sempre mo! 💝",
             "Você é a razão do meu sorriso 😊",
             "Amar você é a melhor poesia já escrita e vivenciada!!! "
         ]
@@ -2071,7 +2094,141 @@ function abrirCarta() {
         content.classList.toggle('show');
     }
 
-   
+    // ============ QUIZ ============
+    function iniciarQuiz() {
+        mostrarPergunta();
+    }
+
+    function mostrarPergunta() {
+        const quiz = CONFIG.quiz[currentQuestion];
+        const optionsContainer = document.getElementById('quizOptions');
+        
+        document.getElementById('questionText').textContent = quiz.pergunta;
+        optionsContainer.innerHTML = '';
+        
+        quiz.opcoes.forEach((opcao, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'quiz-option';
+            btn.textContent = opcao;
+            btn.onclick = () => verificarResposta(index);
+            optionsContainer.appendChild(btn);
+        });
+        
+        document.getElementById('quizResult').style.display = 'none';
+    }
+
+    function verificarResposta(index) {
+    const quiz = CONFIG.quiz[currentQuestion];
+    const resultDiv = document.getElementById('quizResult');
+    const options = document.querySelectorAll('.quiz-option');
+
+    options.forEach(opt => opt.style.pointerEvents = 'none');
+
+    // Aceita tanto uma resposta única quanto várias respostas corretas
+    const respostasCorretas = Array.isArray(quiz.correta)
+        ? quiz.correta
+        : [quiz.correta];
+
+    if (respostasCorretas.includes(index)) {
+
+        options[index].classList.add('correct');
+
+        resultDiv.textContent = '❤️ Correto! Eu te amo demais! ❤️';
+        resultDiv.className = 'quiz-result correct';
+
+        score++;
+
+        // Se todas as opções forem corretas,
+        // marca todas como corretas
+        if (respostasCorretas.length === quiz.opcoes.length) {
+            options.forEach(opt => opt.classList.add('correct'));
+        }
+
+        } else {
+
+            options[index].classList.add('wrong');
+
+            // Marca as respostas corretas
+            respostasCorretas.forEach(resposta => {
+                if (options[resposta]) {
+                    options[resposta].classList.add('correct');
+                }
+            });
+
+            resultDiv.textContent = '😢 Errado... Mas ainda assim te amo! ❤️';
+            resultDiv.className = 'quiz-result wrong';
+        }
+
+        resultDiv.style.display = 'block';
+
+        setTimeout(() => {
+            currentQuestion++;
+
+            if (currentQuestion < CONFIG.quiz.length) {
+                mostrarPergunta();
+            } else {
+                mostrarResultadoFinal();
+            }
+        }, 2500);
+    }
+
+    function mostrarResultadoFinal() {
+    let mensagemFinal = "";
+
+    if (score <= 3) {
+        mensagemFinal = "❤️ O que importa é que eu te amo kkkkkkk ❤️";
+    } else if (score <= 7) {
+        mensagemFinal = "🥰 Uauuuuuu, quase acertou tudinho! Vamos casar kkkkkkk ❤️";
+    } else if (score === 8) {
+        mensagemFinal = "💖 Você é mesmo o amor da minha vida! LINIDAAA! 💖";
+    }
+
+    const container = document.getElementById('quizContainer');
+
+    container.innerHTML = `
+        <div style="text-align: center; padding: 40px;">
+            <i class="fas fa-trophy" style="font-size: 4rem; color: var(--dourado); margin-bottom: 20px;"></i>
+
+            <h3 style="color: var(--rosa-escuro); font-size: 2rem; margin-bottom: 15px;">
+                Quiz Completo!
+            </h3>
+
+            <p style="font-size: 1.2rem; color: #666;">
+                Você acertou ${score} de ${CONFIG.quiz.length} perguntas
+            </p>
+
+            <p style="font-size: 1.5rem; color: var(--rosa-escuro); margin-top: 20px;">
+                ${mensagemFinal}
+            </p>
+
+            <button type="button"
+                class="btn-music"
+                style="margin-top: 25px;"
+                onclick="reiniciarQuiz()">
+                <i class="fas fa-redo"></i> Jogar Novamente
+                </button>
+        </div>
+    `;
+}
+
+    function reiniciarQuiz() {
+    currentQuestion = 0;
+    score = 0;
+
+    const container = document.getElementById('quizContainer');
+
+    container.innerHTML = `
+        <div class="quiz-question" id="quizQuestion">
+            <h3 id="questionText"></h3>
+            <div class="quiz-options" id="quizOptions"></div>
+        </div>
+        <div class="quiz-result" id="quizResult"></div>
+    `;
+
+    mostrarPergunta();
+
+    return false;
+}
 
     // ============ GALERIA ============
     function iniciarGaleria() {
